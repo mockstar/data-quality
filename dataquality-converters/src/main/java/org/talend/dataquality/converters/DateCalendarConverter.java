@@ -17,6 +17,7 @@ import java.time.LocalDate;
 import java.time.chrono.ChronoLocalDate;
 import java.time.chrono.Chronology;
 import java.time.chrono.IsoChronology;
+import java.time.chrono.JapaneseChronology;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DecimalStyle;
@@ -43,9 +44,11 @@ public class DateCalendarConverter {
 
     private static final Logger LOG = LoggerFactory.getLogger(DateCalendarConverter.class);
 
-    public static final String DEFAULT_INPUT_PATTERN = "yyyy-MM-dd";//$NON-NLS-1$
+    private static final String PATTERN_SUFFIX_ERA = "G"; //$NON-NLS-1$
 
-    public static final String DEFAULT_OUTPUT_PATTERN = "yyyy-MM-dd";//$NON-NLS-1$
+    public static final String DEFAULT_PATTERN = "yyyy-MM-dd";//$NON-NLS-1$
+
+    public static final String DEFAULT_PATTERN_WITH_ERA = DEFAULT_PATTERN + ' ' + PATTERN_SUFFIX_ERA;//$NON-NLS-1$
 
     public static final Locale DEFAULT_OUTPUT_LOCALE = Locale.getDefault();
 
@@ -54,22 +57,22 @@ public class DateCalendarConverter {
     /**
      * the input date text format pattern, default is "yyyy-MM-dd".
      */
-    protected String inputFormatPattern = DEFAULT_INPUT_PATTERN;
+    protected String inputFormatPattern;
 
     /**
      * the output date text format pattern, default is "yyyy-MM-dd".
      */
-    protected String outputFormatPattern = DEFAULT_OUTPUT_PATTERN;
+    protected String outputFormatPattern;
 
     /**
      * an optional input Chronology. default is IsoChronology
      */
-    protected Chronology inputChronologyType = IsoChronology.INSTANCE;
+    protected Chronology inputChronologyType;
 
     /**
      * an optional output Chronology. default is IsoChronology
      */
-    protected Chronology outputChronologyType = IsoChronology.INSTANCE;
+    protected Chronology outputChronologyType;
 
     /**
      * the input DateTimeFormatter(which will be created with inputFormatPattern and inputChronologyType).
@@ -81,10 +84,8 @@ public class DateCalendarConverter {
      */
     protected DateTimeFormatter outputDateTimeFormatter;
 
-    private static final String PATTERN_SUFFIX_ERA = "G"; //$NON-NLS-1$
-
     public DateCalendarConverter() {
-        this(DEFAULT_INPUT_PATTERN, DEFAULT_OUTPUT_PATTERN, IsoChronology.INSTANCE, IsoChronology.INSTANCE, DEFAULT_INPUT_LOCALE,
+        this(DEFAULT_PATTERN, DEFAULT_PATTERN, IsoChronology.INSTANCE, IsoChronology.INSTANCE, DEFAULT_INPUT_LOCALE,
                 DEFAULT_OUTPUT_LOCALE);
     }
 
@@ -95,7 +96,7 @@ public class DateCalendarConverter {
      * @param outputChronologyType
      */
     public DateCalendarConverter(Chronology inputChronologyType, Chronology outputChronologyType) {
-        this(DEFAULT_INPUT_PATTERN, DEFAULT_OUTPUT_PATTERN, inputChronologyType, outputChronologyType, DEFAULT_INPUT_LOCALE,
+        this(DEFAULT_PATTERN, DEFAULT_PATTERN, inputChronologyType, outputChronologyType, DEFAULT_INPUT_LOCALE,
                 DEFAULT_OUTPUT_LOCALE);
     }
 
@@ -138,8 +139,13 @@ public class DateCalendarConverter {
             Chronology outputChronologyType) {
         this.inputChronologyType = inputChronologyType == null ? IsoChronology.INSTANCE : inputChronologyType;
         this.outputChronologyType = outputChronologyType == null ? IsoChronology.INSTANCE : outputChronologyType;
-        this.inputFormatPattern = inputFormatPattern == null ? DEFAULT_INPUT_PATTERN : inputFormatPattern;
-        this.outputFormatPattern = outputFormatPattern == null ? DEFAULT_OUTPUT_PATTERN : outputFormatPattern;
+        this.inputFormatPattern = inputFormatPattern == null ? DEFAULT_PATTERN : inputFormatPattern;
+        if (outputFormatPattern == null) {
+            this.outputFormatPattern = JapaneseChronology.INSTANCE.equals(this.outputChronologyType) ? DEFAULT_PATTERN_WITH_ERA
+                    : DEFAULT_PATTERN;
+        } else {
+            this.outputFormatPattern = outputFormatPattern;
+        }
 
         // TDQ-14421 use ResolverStyle.STRICT to validate a date. such as "2017-02-29" should be
         // invalid.STRICT model for pattern without G,should replace 'y' with 'u'.see Java DOC.
