@@ -12,10 +12,11 @@
 // ============================================================================
 package org.talend.dataquality.libraries.devops;
 
+import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
@@ -37,7 +38,6 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import javax.xml.xpath.XPathFactoryConfigurationException;
 
-import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -48,13 +48,11 @@ import org.xml.sax.SAXException;
  * Please note that this tool works when there are only trivial version changes. For major/minor version changes, some manual
  * changes need to be done.
  * It's always recommended to verify all changed file before committing the changes.
- * 
+ * <p>
  * Usage:
  * 1. put the expected snapshot or release version into the TARGET_VERSION field and run the current class as Java application.
  * 2. update the p2 dependency declaration in studio-se-master and studio-full-master repositories.
  * 3. Run {@link UpdateComponentDefinition} to update the components.
- * 
- * @author sizhaoliu
  */
 public class ReleaseVersionBumper {
 
@@ -167,24 +165,22 @@ public class ReleaseVersionBumper {
     }
 
     private void updateManifestVersion(Path manifestPath) throws IOException {
-        File manifestFile = manifestPath.toFile();
-        if (manifestFile.exists()) {
-            System.out.println("Updating: " + manifestFile.getAbsolutePath()); // NOSONAR
-            FileInputStream fis = new FileInputStream(manifestFile);
-            List<String> lines = IOUtils.readLines(fis);
-            FileOutputStream fos = new FileOutputStream(manifestFile);
+        if (Files.exists(manifestPath)) {
+            System.out.println("Updating: " + manifestPath.toString()); // NOSONAR
+            List<String> lines = Files.readAllLines(manifestPath);
+            DataOutputStream writer = new DataOutputStream(Files.newOutputStream(manifestPath));
 
             for (String line : lines) {
                 if (line.startsWith(BUNDLE_VERSION_STRING)) {
 
-                    IOUtils.write(BUNDLE_VERSION_STRING + TARGET_VERSION.replace("-", ".") + "\n", fos);
+                    writer.write(
+                            (BUNDLE_VERSION_STRING + TARGET_VERSION.replace("-", ".") + "\n").getBytes(StandardCharsets.UTF_8));
                 } else {
-                    IOUtils.write(line + "\n", fos);
+                    writer.write((line + "\n").getBytes(StandardCharsets.UTF_8));
                 }
             }
-            fos.flush();
-            fos.close();
-            fis.close();
+            writer.flush();
+            writer.close();
         }
     }
 
