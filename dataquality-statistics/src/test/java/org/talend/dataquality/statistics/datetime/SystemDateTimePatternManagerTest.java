@@ -14,6 +14,9 @@ package org.talend.dataquality.statistics.datetime;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertSame;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assume.assumeTrue;
 
@@ -21,6 +24,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.ResolverStyle;
 import java.util.Locale;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -90,17 +94,24 @@ public class SystemDateTimePatternManagerTest {
     }
 
     @Test
-    public void testgetDateTimeFormatterByPattern() {
+    public void testGetDateTimeFormatterByPattern() {
         DateTimeFormatter dateTimeFormatterByPattern = SystemDateTimePatternManager.getDateTimeFormatterByPattern("dd/MM/yyyy",
                 Locale.ENGLISH);
-        assertFalse(dateTimeFormatterByPattern == null);
-        assertTrue(dateTimeFormatterByPattern.getResolverStyle() == ResolverStyle.STRICT);
+        assertNotNull(dateTimeFormatterByPattern);
+        assertSame(dateTimeFormatterByPattern.getResolverStyle(), ResolverStyle.STRICT);
         assertEquals("17/08/2015", dateTimeFormatterByPattern.format(LocalDate.of(2015, 8, 17)));
         dateTimeFormatterByPattern = SystemDateTimePatternManager.getDateTimeFormatterByPattern("yyyy-MM-dd G", Locale.US);
-        assertFalse(dateTimeFormatterByPattern == null);
+        assertNotNull(dateTimeFormatterByPattern);
         assertEquals("2015-08-17 AD", dateTimeFormatterByPattern.format(LocalDate.of(2015, 8, 17)));
         dateTimeFormatterByPattern = SystemDateTimePatternManager.getDateTimeFormatterByPattern("yyyy-MM-dd G", null);
-        assertTrue(dateTimeFormatterByPattern == null);
+        assertNull(dateTimeFormatterByPattern);
     }
 
+    @Test
+    public void findAllPatternsOfSimpleDate() {
+        String date = "07/07/2007";
+        Map<String, DateTimeFormatter> patterns = SystemDateTimePatternManager.findAllCustomDatePatterns(date);
+        assertTrue(patterns.containsKey("dd/MM/yyyy"));
+        assertTrue(patterns.containsKey("MM/dd/yyyy"));
+    }
 }

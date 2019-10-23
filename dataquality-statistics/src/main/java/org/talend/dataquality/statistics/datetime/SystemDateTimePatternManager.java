@@ -237,6 +237,29 @@ public class SystemDateTimePatternManager {
     }
 
     /**
+     * Find all the custom date patterns that are valid for the given value
+     *
+     * @param value the value from which we want to retrieve patterns
+     * @return all the found patterns with their corresponding dateTimeFormatter
+     */
+    public static Map<String, DateTimeFormatter> findAllCustomDatePatterns(String value) {
+        Map<String, DateTimeFormatter> datePatternsMap = new HashMap<>();
+        if (checkDatesPreconditions(value)) {
+            for (Map<Pattern, String> patternMap : DATE_PATTERN_GROUP_LIST) {
+                for (Entry<Pattern, String> entry : patternMap.entrySet()) {
+                    Matcher matcher = entry.getKey().matcher(value);
+                    if (matcher.find()) {
+                        Optional<DateTimeFormatter> dateTimeFormatter = validateWithPatternInAnyLocale(value, entry.getValue(),
+                                matcher);
+                        dateTimeFormatter.ifPresent(timeFormatter -> datePatternsMap.put(entry.getValue(), timeFormatter));
+                    }
+                }
+            }
+        }
+        return datePatternsMap;
+    }
+
+    /**
      * Whether the given string value is a date or not and the pattern associated
      *
      * @param value to check
