@@ -14,7 +14,7 @@ N/A
 ### Deprecated
 N/A
 ### Fixed
-N/A
+- fix(TDQ-17709): fix precision issues to ensure that two records match if the score is greater than or equal to the threshold
 ### Security
 N/A
 
