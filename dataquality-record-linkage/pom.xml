@@ -9,6 +9,8 @@
 	<artifactId>dataquality-record-linkage</artifactId>
 	<packaging>bundle</packaging>
 	<name>dataquality-record-linkage</name>
+	<!-- Version 6.1.7 is for 6.1.3 patch -->
+	<version>6.1.7</version>
 	<description>Record Matching algorithms, blocking key calculation and T-Swoosh</description>
 
 	<dependencies>
