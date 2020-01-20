@@ -15,6 +15,8 @@ N/A
 N/A
 ### Fixed
 - fix(TDQ-17709): fix precision issues to ensure that two records match if the score is greater than or equal to the threshold
+- fix(TDQ-17851): improve the performance and support surrogate pair
+
 ### Security
 N/A
 
