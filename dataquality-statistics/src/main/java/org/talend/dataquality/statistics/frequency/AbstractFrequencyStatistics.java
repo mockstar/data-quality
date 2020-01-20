@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 
 /**
  * Frequency statistics bean which delegate the computation to evaluator.
- * 
+ *
  * @author mzhao
  *
  */
@@ -33,6 +33,10 @@ public abstract class AbstractFrequencyStatistics {
             freq = 0l;
         }
         value2freq.put(value, freq + 1);
+    }
+
+    public Map<String, Long> getValue2freq() {
+        return value2freq;
     }
 
     public Map<String, Long> getTopK(int topk) {
