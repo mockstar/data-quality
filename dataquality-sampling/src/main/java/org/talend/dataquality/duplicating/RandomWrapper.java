@@ -18,10 +18,8 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * Wrapper of java.util.Random with possibility of getting the seed.
- * 
- * @deprecated This class should not be used as an API. It needs to be changed to package protected in a future major release.
  */
-public class RandomWrapper extends Random {
+class RandomWrapper extends Random {
 
     private static final long serialVersionUID = 1L;
 
@@ -31,11 +29,11 @@ public class RandomWrapper extends Random {
 
     private static final AtomicLong seedUniquifier = new AtomicLong(8682522807148012L);
 
-    public RandomWrapper() {
+    RandomWrapper() {
         this(seedUniquifier() ^ System.nanoTime());
     }
 
-    public RandomWrapper(long seed) {
+    RandomWrapper(long seed) {
         this.seed = new AtomicLong(seed);
         random = new Random(seed);
     }
@@ -52,11 +50,7 @@ public class RandomWrapper extends Random {
         }
     }
 
-    public Random getRandom() {
-        return random;
-    }
-
-    public long getSeed() {
+    long getSeed() {
         return seed.get();
     }
 

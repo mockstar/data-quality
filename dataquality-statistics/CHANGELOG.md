@@ -10,8 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - chore(TDQ-17993): Support German timezone strings for any default JVM locale
 ### Changed
 - chore(TDS-764): adding getter to retrieve statistics map
+- chore(TDQ-17788): cancel the deprecation of setStoreInvalidValues in QualityAnalyzer implementations
 ### Removed
-N/A
+- chore(TDQ-17788): remove deprecated classes EastAsianCharPatternRecognizer, DateTimePatternManager, and CustomDateTimePatternPatternManager
+- chore(TDQ-17788): remove a deprecated constructor of ValueQualityAnalyzer
+- chore(TDQ-17788): remove deprecated methods in class SystemDateTimePatternManager and TypeInferenceUtils
 ### Deprecated
 N/A
 ### Fixed

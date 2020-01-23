@@ -18,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.management.ManagementFactory;
 import java.lang.management.ThreadMXBean;
-import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.io.IOUtils;
@@ -52,7 +51,7 @@ public class PerformanceTest {
                 if (!"".equals(line.trim())) {
                     final String[] sampleLine = line.trim().split("\t");
                     final String sample = sampleLine[0];
-                    CustomDateTimePatternManager.isDate(sample, Collections.emptyList());
+                    SystemDateTimePatternManager.isDate(sample);
                     count++;
                     if (count > 100000) {
                         break loop;
@@ -74,7 +73,7 @@ public class PerformanceTest {
         final InputStream stream = SystemDateTimePatternManager.class.getResourceAsStream("DateSampleTable.txt");
         final List<String> lines = IOUtils.readLines(stream);
 
-        SystemDateTimePatternManager.datePatternReplace("12/02/99");// init DateTimeFormatters
+        SystemDateTimePatternManager.getDatePatterns("12/02/99");// init DateTimeFormatters
 
         final ThreadMXBean mxBean = ManagementFactory.getThreadMXBean();
         final long cpuBefore = mxBean.getCurrentThreadCpuTime();
@@ -86,7 +85,7 @@ public class PerformanceTest {
                 if (!"".equals(line.trim())) {
                     final String[] sampleLine = line.trim().split("\t");
                     final String sample = sampleLine[0];
-                    SystemDateTimePatternManager.datePatternReplace(sample);
+                    SystemDateTimePatternManager.getDatePatterns(sample);
                     count++;
                     if (count > 100000) {
                         break loop;
