@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import junit.framework.TestCase;
-
 import org.junit.Assert;
 import org.talend.dataquality.matchmerge.Attribute;
 import org.talend.dataquality.matchmerge.MatchMergeAlgorithm;
@@ -16,6 +14,8 @@ import org.talend.dataquality.matchmerge.SubString;
 import org.talend.dataquality.record.linkage.attribute.IAttributeMatcher;
 import org.talend.dataquality.record.linkage.constant.AttributeMatcherType;
 import org.talend.dataquality.record.linkage.utils.SurvivorShipAlgorithmEnum;
+
+import junit.framework.TestCase;
 
 public class MultiColumnMFBOrderTest extends TestCase {
 

@@ -14,8 +14,6 @@ package org.talend.dataquality.record.linkage.utils;
 
 import java.io.Serializable;
 
-import org.apache.commons.lang.StringUtils;
-
 /**
  * @author scorreia
  */
