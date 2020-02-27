@@ -228,8 +228,6 @@ public class StringHandlerTest {
         assertEquals("a", StringHandler.pickChar(MIXTD_SURROGATEPAIR, "4")); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals("ン", StringHandler.pickChar(JAPANESE1_STR, "1")); //$NON-NLS-1$ //$NON-NLS-2$
         assertEquals(BLANK_STR, StringHandler.pickChar(JAPANESE1_STR, "リ")); //$NON-NLS-1$ //$NON-NLS-2$
-
-        System.out.println("Picked : " + StringHandler.pickChar(TEST_STR, "3-1")); //$NON-NLS-1$ //$NON-NLS-2$
     }
 
     /**
