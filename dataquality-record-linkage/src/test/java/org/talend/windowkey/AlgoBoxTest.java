@@ -42,7 +42,7 @@ public class AlgoBoxTest {
     private static final String JAPANESE3_STR = "リンゴ を 食べる"; //$NON-NLS-1$
 
     /**
-     * Test method for {@link org.talend.windowkey#add_Left_Char(String, String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#add_Left_Char(String, String)}
      */
     @Test
     public void testAdd_Left_Char() {
@@ -55,7 +55,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#add_Right_Char(String, String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#add_Right_Char(String, String)}
      */
     @Test
     public void testAdd_Right_Char() {
@@ -68,7 +68,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#colognePhonetic(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#colognePhonetic(String)}
      */
     @Test
     public void testColognePhonetic() {
@@ -81,7 +81,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#doublemetaphone(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#doublemetaphone(String)}
      */
     @Test
     public void testDoublemetaphone() {
@@ -94,7 +94,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#exact(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#exact(String)}
      */
     @Test
     public void testExact() {
@@ -107,7 +107,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#fingerPrintKey(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#fingerPrintKey(String)}
      */
     @Test
     public void testFingerPrintKey() {
@@ -120,7 +120,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#first_Char_EW(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#first_Char_EW(String)}
      */
     @Test
     public void testFirst_Char_EW() {
@@ -138,7 +138,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#first_N_Char(String, int)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#first_N_Char(String, int)}
      */
     @Test
     public void testFirst_N_Char() {
@@ -159,7 +159,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#first_N_Char_EW(String, int)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#first_N_Char_EW(String, int)}
      */
     @Test
     public void testFirst_N_Char_EW() {
@@ -185,7 +185,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#first_N_Consonants(String, int)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#first_N_Consonants(String, int)}
      */
     @Test
     public void testFirst_N_Consonants() {
@@ -201,7 +201,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#first_N_Vowels(String, int)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#first_N_Vowels(String, int)}
      */
     @Test
     public void testFirst_N_Vowels() {
@@ -218,7 +218,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#last_N_Char(String, int)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#last_N_Char(String, int)}
      */
     @Test
     public void testLast_N_Char() {
@@ -234,15 +234,15 @@ public class AlgoBoxTest {
         assertEquals(QUO_STR, AlgoBox.last_N_Char(QUO_STR, 1));
         // TDQ-15079: Support Chinese　and surrogate pair characters
         assertEquals(MIXTD_SURROGATEPAIR, AlgoBox.last_N_Char(MIXTD_SURROGATEPAIR, 100));
-        assertEquals("𠀑ab", AlgoBox.last_N_Char(MIXTD_SURROGATEPAIR, 3)); //$NON-NLS-1$ 
-        assertEquals("𠀐我𠀑ab", AlgoBox.last_N_Char(MIXTD_SURROGATEPAIR, 5)); //$NON-NLS-1$ 
+        assertEquals("𠀑ab", AlgoBox.last_N_Char(MIXTD_SURROGATEPAIR, 3)); //$NON-NLS-1$
+        assertEquals("𠀐我𠀑ab", AlgoBox.last_N_Char(MIXTD_SURROGATEPAIR, 5)); //$NON-NLS-1$
         assertEquals("ゴ", AlgoBox.last_N_Char(JAPANESE1_STR, 1)); //$NON-NLS-1$
         assertEquals("べる", AlgoBox.last_N_Char(JAPANESE2_STR, 2)); //$NON-NLS-1$
         assertEquals(" 食べる", AlgoBox.last_N_Char(JAPANESE3_STR, 4)); //$NON-NLS-1$
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#lowerCase(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#lowerCase(String)}
      */
     @Test
     public void testLowerCase() {
@@ -259,7 +259,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#metaphone(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#metaphone(String)}
      */
     @Test
     public void testMetaphone() {
@@ -276,7 +276,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#nGramKey(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#nGramKey(String)}
      */
     @Test
     public void testNGramKey() {
@@ -294,7 +294,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#pick_Char(String, String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#pick_Char(String, String)}
      */
     @Test
     public void testPick_Char() {
@@ -321,7 +321,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#removeDiacriticalMarks(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#removeDiacriticalMarks(String)}
      */
     @Test
     public void testRemoveDiacriticalMarks() {
@@ -336,7 +336,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#removeDMAndLowerCase(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#removeDMAndLowerCase(String)}
      */
     @Test
     public void testRemoveDMAndLowerCase() {
@@ -351,7 +351,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#removeDMAndUpperCase(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#removeDMAndUpperCase(String)}
      */
     @Test
     public void testRemoveDMAndUpperCase() {
@@ -366,7 +366,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#soundex(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#soundex(String)}
      */
     @Test
     public void testSoundex() {
@@ -384,7 +384,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#subStr(String, String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#subStr(String, String)}
      */
     @Test
     public void testSubStr() {
@@ -401,7 +401,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#upperCase(String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#upperCase(String)}
      */
     @Test
     public void testUpperCase() {
@@ -418,7 +418,7 @@ public class AlgoBoxTest {
     }
 
     /**
-     * Test method for {@link org.talend.windowkey#useDefault(String, String)}
+     * Test method for {@link org.talend.windowkey.AlgoBox#useDefault(String, String)}
      */
     @Test
     public void testUseDefault() {

@@ -12,9 +12,7 @@
 // ============================================================================
 package org.talend.windowkey;
 
-import java.util.StringTokenizer;
-
-import org.talend.dataquality.record.linkage.utils.AsciiUtils;
+import org.talend.dataquality.common.character.StringHandler;
 
 /**
  * 
@@ -71,206 +69,84 @@ public class AlgoBox {
 
     }
 
-    // Pick characters
+    /**
+     * Pick characters according to pattern
+     * 
+     * @deprecated Use {@link StringHandler#pickChar(String, String)} instead
+     */
+    @Deprecated
     public static String pick_Char(String sInput, String pattern) {
-
-        if (sInput == null || "".equals(sInput.trim())) { //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-
-        if (pattern == null || "".equals(pattern.trim())) { //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-
-        String d_pattern = "^[0-9--;]*"; //$NON-NLS-1$
-
-        if (!pattern.matches(d_pattern)) {
-            return ""; //$NON-NLS-1$
-        }
-
-        StringBuilder sb = new StringBuilder();
-        String[] arr_1 = pattern.split(";"); //$NON-NLS-1$
-
-        for (String valueOf_arr_1 : arr_1) {
-
-            if (!"".equals(valueOf_arr_1)) { //$NON-NLS-1$
-                String[] arr_2 = valueOf_arr_1.split("-"); //$NON-NLS-1$
-                int len_arr_2 = arr_2.length;
-
-                if (len_arr_2 == 2) {
-
-                    if ("".equals(arr_2[0]) || "".equals(arr_2[1])) { //$NON-NLS-1$ //$NON-NLS-2$
-                        ;
-                    } else {
-                        sb.append(subStr(sInput, arr_2[0] + ";" + arr_2[1])); //$NON-NLS-1$
-                    }
-
-                } else if (len_arr_2 == 1) {
-                    if (Integer.parseInt(arr_2[0]) < sInput.length()) {
-                        // support surrogate pair.replace charAt with subString
-                        int index = Integer.parseInt(arr_2[0]);
-                        int startOffset = sInput.offsetByCodePoints(0, index);
-                        String substring = sInput.substring(startOffset, sInput.offsetByCodePoints(startOffset, 1));
-                        sb.append(substring);
-                    }
-
-                } else {
-                    ;
-                }
-
-            }
-
-        }
-
-        return sb.toString();
-
+        return StringHandler.pickChar(sInput, pattern);
     }
 
-    // First N vowels of the string
+    /**
+     * First N vowels of the string
+     * 
+     * @deprecated Use {@link StringHandler#firstNConsonants(String, int)} instead
+     */
+    @Deprecated
     public static String first_N_Consonants(String sInput, int nb) {
-        if (sInput == null || "".equals(sInput.trim())) { //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-
-        String d_pattern = "[a-zA-Z&&[^aeiouAEIOU]]"; //$NON-NLS-1$
-
-        StringBuilder sb = new StringBuilder();
-        int s_len = sInput.length();
-        String s;
-
-        for (int i = 0; i < s_len; i++) {
-            s = sInput.substring(i, i + 1);
-            if (!" ".equals(s) && s.matches(d_pattern) && ((--nb) >= 0)) { //$NON-NLS-1$
-                sb.append(s);
-            }
-        }
-
-        return sb.toString();
+        return StringHandler.firstNConsonants(sInput, nb);
     }
 
-    // First N consonants of the string
+    /**
+     * First N consonants of the string
+     * 
+     * @deprecated Use {@link StringHandler#firstNVowels(String, int)} instead
+     */
+    @Deprecated
     public static String first_N_Vowels(String sInput, int nb) {
-        if (sInput == null || "".equals(sInput.trim())) { //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-
-        String d_pattern = "[aeiouAEIOU]"; //$NON-NLS-1$
-
-        StringBuilder sb = new StringBuilder();
-        int s_len = sInput.length();
-        String s;
-
-        for (int i = 0; i < s_len; i++) {
-            s = sInput.substring(i, i + 1);
-            if (!" ".equals(s) && s.matches(d_pattern) && ((--nb) >= 0)) { //$NON-NLS-1$
-                sb.append(s);
-            }
-        }
-
-        return sb.toString();
+        return StringHandler.firstNVowels(sInput, nb);
     }
 
-    // substring
+    /**
+     * substring
+     * 
+     * @deprecated Use {@link StringHandler#subStr(String, String)} instead
+     */
+    @Deprecated
     public static String subStr(String sInput, String pattern) {
-
-        if (sInput == null || "".equals(sInput)) { //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-
-        if (pattern == null) {
-            return ""; //$NON-NLS-1$
-        } else {
-            String d_pattern = "^[0-9]*[;][0-9]*"; //$NON-NLS-1$
-            if (pattern.matches(d_pattern)) {
-                int beginIndex = Integer.parseInt(pattern.substring(0, pattern.indexOf(";"))); //$NON-NLS-1$
-                int endIndex = Integer.parseInt(pattern.substring(pattern.indexOf(";") + 1)); //$NON-NLS-1$
-
-                int sInputCPCount = sInput.codePointCount(0, sInput.length());
-                if (sInputCPCount < endIndex) {
-                    endIndex = sInputCPCount;
-                }
-
-                if (beginIndex <= endIndex) {
-                    return sInput.substring(sInput.offsetByCodePoints(0, beginIndex),
-                            sInput.offsetByCodePoints(0, endIndex));
-                }
-            }
-        }
-
-        return ""; //$NON-NLS-1$
+        return StringHandler.subStr(sInput, pattern);
     }
 
-    // first N characters of the string
+    /**
+     * first N characters of the string
+     * 
+     * @deprecated Use {@link StringHandler#firstNChar(String, int)} instead
+     */
+    @Deprecated
     public static String first_N_Char(String sInput, int nb) {
-        if (sInput == null || "".equals(sInput)) { //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-
-        if (nb < 0) {
-            return sInput;
-        }
-
-        int sInputCPCount = sInput.codePointCount(0, sInput.length());
-        if (sInputCPCount < nb) {
-            nb = sInputCPCount;
-        }
-        return sInput.substring(0, sInput.offsetByCodePoints(0, nb));
+        return StringHandler.firstNChar(sInput, nb);
     }
 
-    // last N characters of the string
-
+    /**
+     * last N characters of the string
+     * 
+     * @deprecated Use {@link StringHandler#lastNChar(String, int)} instead
+     */
+    @Deprecated
     public static String last_N_Char(String sInput, int nb) {
-
-        if (sInput == null || "".equals(sInput)) { //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-        int s_len = sInput.codePointCount(0, sInput.length());
-        if (s_len < nb) {
-            nb = s_len;
-        }
-        return sInput.substring(sInput.offsetByCodePoints(0, s_len - nb));
+        return StringHandler.lastNChar(sInput, nb);
     }
 
-    // N first characters of each word
+    /**
+     * N first characters of each word
+     * 
+     * @deprecated Use {@link StringHandler#firstNCharEW(String, int)} instead
+     */
+    @Deprecated
     public static String first_N_Char_EW(String sInput, int nb) {
-
-        if (sInput == null || "".equals(sInput)) { //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-
-        StringBuilder sb = new StringBuilder();
-        StringTokenizer tok = new StringTokenizer(sInput);
-
-        while (tok.hasMoreTokens()) {
-            String word = tok.nextToken();
-            int wordCount = word.codePointCount(0, word.length());
-            for (int i = 0; i < nb && i < wordCount; i++) {
-                int startOffset = word.offsetByCodePoints(0, i);
-                String substring = word.substring(startOffset, word.offsetByCodePoints(startOffset, 1));
-                sb.append(substring);
-            }
-        }
-
-        return sb.toString();
+        return StringHandler.firstNCharEW(sInput, nb);
     }
 
-    // First character of each word
+    /**
+     * First character of each word
+     * 
+     * @deprecated Use {@link StringHandler#firstCharEW(String)} instead
+     */
+    @Deprecated
     public static String first_Char_EW(String sInput) {
-
-        if (sInput == null || "".equals(sInput)) { //$NON-NLS-1$
-            return ""; //$NON-NLS-1$
-        }
-
-        StringBuilder sb = new StringBuilder();
-
-        StringTokenizer tok = new StringTokenizer(sInput);
-
-        while (tok.hasMoreTokens()) {
-            String word = tok.nextToken();
-            sb.append(word.substring(0, word.offsetByCodePoints(0, 1)));
-        }
-
-        return sb.toString();
+        return StringHandler.firstCharEW(sInput);
     }
 
     public static String soundex(String sInput) {
@@ -297,84 +173,87 @@ public class AlgoBox {
     }
 
     /*-----------------------optional algo---------------------*/
-    // Add left position character
 
+    /**
+     * Add left position character
+     * 
+     * @deprecated Use {@link StringHandler#addPrefix(String, String)} instead
+     */
+    @Deprecated
     public static String add_Left_Char(String sInput, String position) {
-
-        if (position == null || "".equals(position)) { //$NON-NLS-1$
-            return sInput;
-        }
-
-        if (sInput == null) {
-            sInput = ""; //$NON-NLS-1$
-        }
-
-        return position + sInput;
+        return StringHandler.addPrefix(sInput, position);
     }
 
-    // Add right position character
-
+    /**
+     * Add right position character
+     * 
+     * @deprecated Use {@link StringHandler#concatenate(String, String)} instead
+     */
+    @Deprecated
     public static String add_Right_Char(String sInput, String position) {
-
-        if (position == null || "".equals(position)) { //$NON-NLS-1$
-            return sInput;
-        }
-
-        if (sInput == null) {
-            sInput = ""; //$NON-NLS-1$
-        }
-
-        return sInput + position;
+        return StringHandler.concatenate(sInput, position);
     }
 
-    // Remove diacritical marks
+    /**
+     * Remove diacritical marks
+     * 
+     * @deprecated Use {@link StringHandler#removeDiacriticalMarks(String)} instead
+     */
+    @Deprecated
     public static String removeDiacriticalMarks(String sInput) {
-        if (sInput == null) {
-            return null;
-        }
-        return AsciiUtils.removeDiacriticalMarks(sInput);
+        return StringHandler.removeDiacriticalMarks(sInput);
     }
 
+    /**
+     * Return the input or empty if null.
+     * 
+     * @deprecated Use {@link StringHandler#exact(String)} instead
+     */
+    @Deprecated
     public static String exact(String sInput) {
-        // must set it to "" when it is null. otherwise use + to contact will get "null"
-        return sInput == null ? "" : sInput; //$NON-NLS-1$
+        return StringHandler.exact(sInput);
     }
 
+    /**
+     * Return the input or default if null or empty.
+     * 
+     * @deprecated Use {@link StringHandler#useDefault(String, String)} instead
+     */
+    @Deprecated
     public static String useDefault(String sInput, String insteadOf) {
-
-        if (sInput == null || "".equals(sInput)) { //$NON-NLS-1$
-            return insteadOf;
-        } else {
-            return sInput;
-        }
+        return StringHandler.useDefault(sInput, insteadOf);
     }
 
+    /**
+     * @deprecated Use {@link StringHandler#lowerCase(String)} instead
+     */
+    @Deprecated
     public static String lowerCase(String sInput) {
-        if (sInput == null) {
-            return null;
-        }
-        return sInput.toLowerCase();
+        return StringHandler.lowerCase(sInput);
     }
 
+    /**
+     * @deprecated Use {@link StringHandler#upperCase(String)} instead
+     */
+    @Deprecated
     public static String upperCase(String sInput) {
-        if (sInput == null) {
-            return null;
-        }
-        return sInput.toUpperCase();
+        return StringHandler.upperCase(sInput);
     }
 
+    /**
+     * @deprecated Use {@link StringHandler#removeDMAndLowerCase(String)} instead
+     */
+    @Deprecated
     public static String removeDMAndLowerCase(String sInput) {
-        if (sInput == null) {
-            return null;
-        }
-        return lowerCase(removeDiacriticalMarks(sInput));
+        return StringHandler.removeDMAndLowerCase(sInput);
     }
 
+    /**
+     * @deprecated Use {@link StringHandler#removeDMAndUpperCase(String)} instead
+     */
+    @Deprecated
     public static String removeDMAndUpperCase(String sInput) {
-        if (sInput == null) {
-            return null;
-        }
-        return upperCase(removeDiacriticalMarks(sInput));
+        return StringHandler.removeDMAndUpperCase(sInput);
     }
 
     public static String fingerPrintKey(String sInput) {
