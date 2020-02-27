@@ -6,7 +6,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 ### Added
-N/A
+- chore(TDQ-18098): Add character package for character handling methods coming from record linkage
 ### Changed
 N/A
 ### Removed

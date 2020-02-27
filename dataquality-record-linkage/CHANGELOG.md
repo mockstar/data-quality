@@ -12,7 +12,7 @@ N/A
 ### Removed
 N/A
 ### Deprecated
-N/A
+- chore(TDQ-18098): Move string methods in AlgoBox, AsciiUtils and StringComparisonUtils classes to common
 ### Fixed
 N/A
 ### Security
