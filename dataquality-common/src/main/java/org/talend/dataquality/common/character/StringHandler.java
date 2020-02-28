@@ -1,7 +1,5 @@
 package org.talend.dataquality.common.character;
 
-import java.util.StringTokenizer;
-
 public class StringHandler {
 
     /**
@@ -216,16 +214,10 @@ public class StringHandler {
         }
 
         StringBuilder sb = new StringBuilder();
-        StringTokenizer tok = new StringTokenizer(sInput);
+        TokenizedString tokenized = new TokenizedString(sInput, "[ \t\n\r\f]+");
 
-        while (tok.hasMoreTokens()) {
-            String word = tok.nextToken();
-            int wordCount = word.codePointCount(0, word.length());
-            for (int i = 0; i < nb && i < wordCount; i++) {
-                int startOffset = word.offsetByCodePoints(0, i);
-                String substring = word.substring(startOffset, word.offsetByCodePoints(startOffset, 1));
-                sb.append(substring);
-            }
+        for(String word : tokenized.getTokens()) {
+            sb.append(firstNChar(word, nb));
         }
 
         return sb.toString();
@@ -244,13 +236,9 @@ public class StringHandler {
         }
 
         StringBuilder sb = new StringBuilder();
+        TokenizedString tokenized = new TokenizedString(sInput, "[ \t\n\r\f]+");
 
-        StringTokenizer tok = new StringTokenizer(sInput);
-
-        while (tok.hasMoreTokens()) {
-            String word = tok.nextToken();
-            sb.append(word, 0, word.offsetByCodePoints(0, 1));
-        }
+        tokenized.getTokens().forEach(word -> sb.append(word, 0, word.offsetByCodePoints(0, 1)));
 
         return sb.toString();
     }
