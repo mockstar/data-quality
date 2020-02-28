@@ -214,9 +214,9 @@ public class StringHandler {
         }
 
         StringBuilder sb = new StringBuilder();
-        TokenizedString tokenized = new TokenizedString(sInput, "[ \t\n\r\f]+");
+        String[] words = sInput.split("[ \t\n\r\f]+");
 
-        for (String word : tokenized.getTokens()) {
+        for (String word : words) {
             sb.append(firstNChar(word, nb));
         }
 
@@ -236,9 +236,11 @@ public class StringHandler {
         }
 
         StringBuilder sb = new StringBuilder();
-        TokenizedString tokenized = new TokenizedString(sInput, "[ \t\n\r\f]+");
+        String[] words = sInput.split("[ \t\n\r\f]+");
 
-        tokenized.getTokens().forEach(word -> sb.append(word, 0, word.offsetByCodePoints(0, 1)));
+        for (String word : words) {
+            sb.append(word, 0, word.offsetByCodePoints(0, 1));
+        }
 
         return sb.toString();
     }
