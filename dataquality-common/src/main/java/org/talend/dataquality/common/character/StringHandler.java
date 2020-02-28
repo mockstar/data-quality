@@ -216,7 +216,7 @@ public class StringHandler {
         StringBuilder sb = new StringBuilder();
         TokenizedString tokenized = new TokenizedString(sInput, "[ \t\n\r\f]+");
 
-        for(String word : tokenized.getTokens()) {
+        for (String word : tokenized.getTokens()) {
             sb.append(firstNChar(word, nb));
         }
 
