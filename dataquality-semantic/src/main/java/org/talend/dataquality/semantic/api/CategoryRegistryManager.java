@@ -32,6 +32,8 @@ import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.SerializationUtils;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.LockFactory;
+import org.apache.lucene.store.SingleInstanceLockFactory;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
@@ -258,6 +260,8 @@ public class CategoryRegistryManager {
                 // we need to iterate over the potential resources
                 final List<URL> potentialResources = Collections
                         .list(this.getClass().getClassLoader().getResources(sourceSubFolder));
+
+                final LockFactory lockFactory = new SingleInstanceLockFactory();
                 for (URL url : potentialResources) {
 
                     final URI uri = url.toURI();
@@ -266,6 +270,8 @@ public class CategoryRegistryManager {
                     // try the potential resource one by one
                     try (final Directory srcDir = ClassPathDirectory.open(uri)) {
                         if (usingLocalCategoryRegistry && !destSubFolder.exists()) {
+                            // AWS Lambda compatible lock factory
+                            srcDir.setLockFactory(lockFactory);
                             DictionaryUtils.rewriteIndex(srcDir, destSubFolder);
                             // if successful, let's not try the remaining ones
                             LOGGER.info("base index loaded from " + uri.toString());
